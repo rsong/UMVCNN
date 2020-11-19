@@ -59,27 +59,11 @@ classdef SP < dagnn.Layer
                 y2 = zeros([1, 1, sz3b, sz4/self.vstride], 'single');
             end
             
-            
-%             tensor1 = reshape(inputs{1},[sz1 sz2 sz3a self.vstride sz4/self.vstride]);
-%             tensor2 = reshape(inputs{2},[sz1 sz2 sz3b 1 sz4/self.vstride]);
-            dzdy = derOutputs{1};%size(dzdy) is [1 1 sz3a sz4/self.vstride];
             y1=reshape(y1, [sz1, sz2, sz3a, sz3b, sz4/self.vstride]);
             
-            %             for i=1:sz4/self.vstride
-            %
-            %                 dzdyr=reshape(dzdy(1,1,:,i), [1,sz3a]);
-            %                 xa = reshape(tensor1(:,:,:,:,i), [sz3b,sz3a]);
-            %                 xb = reshape(tensor2(:,:,:,:,i), [sz3b,1]);
-            %
-            %                 db = reshape(xa*dzdyr', [1, 1, sz3b]);
-            %                 da = reshape(xb*dzdyr, [1, 1, sz3a,sz3b]);
-            %
-            %                 y1(:,:,:,:,i)=da;
-            %                 y2(:,:,:,i)=db;
-            %             end
-             dzdyr=reshape(dzdy, [sz3a 1 sz4/self.vstride]);
-             xa = reshape(inputs{1}, [sz3a self.vstride sz4/self.vstride]);
-             xb= reshape(inputs{2},[self.vstride 1 sz4/self.vstride]);
+            dzdyr=reshape(dzdy, [sz3a 1 sz4/self.vstride]);
+            xa = reshape(inputs{1}, [sz3a self.vstride sz4/self.vstride]);
+            xb= reshape(inputs{2},[self.vstride 1 sz4/self.vstride]);
             for i=1:sz4/self.vstride
                 x1=xa(:,:,i);
                 x2=xb(:,:,i);
@@ -94,45 +78,8 @@ classdef SP < dagnn.Layer
             derInputs{1}=y1;
             derInputs{2}=y2;
             derParams = {};
-                        % validate derivative
-%                         dererror1=zeros(1,100);
-%                         dererror2=zeros(1,100);
-%                        for iii=1:100
-%                         ex = randn(size(inputs{1}), 'single') ;
-%             
-%                         eta = 0.0001 ;
-%                         xp = inputs{1} + eta * ex  ;
-%             
-%             
-%                         outputs = forward(self, inputs, params);
-%                         y=outputs{1};
-%                         inputs2=inputs;
-%                         inputs2{1}=xp;
-%             
-%                         outputsp = forward(self, inputs2, params);
-%                         yp=outputsp{1};
-%                         dzdx_empirical1 = sum(dzdy(:) .* (yp(:) - y(:)) / eta) ;
-%                         dzdx_computed1= sum(y1(:) .* ex(:)) ;
-%             
-%                          ex2 = randn(size(inputs{2}), 'single') ;
-%                          xp2 = inputs{2} + eta * ex2  ;
-%                          inputs2=inputs;
-%                           inputs2{2}=xp2;
-%                           outputsp2 = forward(self, inputs2, params);
-%                         yp2=outputsp2{1};
-%                         dzdx_empirical2 = sum(dzdy(:) .* (yp2(:) - y(:)) / eta) ;
-%                         dzdx_computed2= sum(y2(:) .* ex2(:)) ;
-%                        d1=abs(1 - dzdx_empirical1/dzdx_computed1)*100;
-%                       d2=abs(1 - dzdx_empirical2/dzdx_computed2)*100;
-%                       dererror1(iii)=d1;
-%                       dererror2(iii)=d2;
-%                        end
-%                        mean(d1)
-%                        mean(d2)
-                       
+            
         end
-        
-        
-        
+           
     end
 end
