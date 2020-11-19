@@ -1,7 +1,7 @@
 # UMVCNN
 Unsupervised Multi-View CNN for Salient View Selection of 3D Objects and Scenes
 
-Make sure that the dependencies are correctly installed and compiled. If you already have them on your compouter, please make sure that the files listed below (maybe more than them) are added or replaced with the corresonding ones provided by us.
+Make sure that the dependencies are correctly installed and compiled. If you already have them on your compouter, please make sure that the files listed below (maybe more than them) are added or replaced with the corresponding ones provided by us.
 
 .\dependencies\matconvnet\vl_nnloss.m
 
