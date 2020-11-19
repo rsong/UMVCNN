@@ -13,13 +13,9 @@ function net = cnn_shape(dataName, varargin)
 %   `aug`:: 'none'
 %     specifies the operations (fliping, perturbation, etc.) used
 %     to get sub-regions
-%   `viewpoolPos` :: 'relu5'
-%     location of the viewpool layer, only used when multiview is true
 %   `includeVal`:: false
 %     if true, validation set is also used for training
-%   `useUprightAssumption`:: true
-%     if true, 12 views will be used to render meshes,
-%     otherwise 80 views based on a dodecahedron
+
 %
 %   `train`
 %     training parameters:
@@ -32,7 +28,7 @@ function net = cnn_shape(dataName, varargin)
 %       `gpus` :: []
 %         a list of available gpus
 %
-% Hang Su
+% Modified from Hang Su
 
 
 opts.baseModel = 'imagenet-matconvnet-vgg-m';
@@ -257,22 +253,6 @@ batch = batch(:)';
 
 viewinds = imdb.images.vind(batch) ;
 viewinds  = reshape(viewinds ,[1 1 size(viewinds ,1) numel(batch)]);
-% images = strcat([imdb.imageDir filesep], imdb.images.name(batch)) ;
-% isVal = ~isempty(batch) && imdb.images.set(batch(1)) ~= 1 ;
-%
-% if ~isVal
-%     % training
-%     im = cnn_shape_get_batch(images, opts, ...
-%         'prefetch', nargout == 0, ...
-%         'nViews', nViews);
-% else
-%     % validation: disable data augmentation
-%     im = cnn_shape_get_batch(images, opts, ...
-%         'prefetch', nargout == 0, ...
-%         'nViews', nViews, ...
-%         'transformation', 'none');
-% end
-
 
 
 % opts.scale = opts.imageScales(randi(numel(opts.imageScales)));
@@ -307,45 +287,4 @@ end
 
 inputs = {'input', im, 'viewind', viewinds};
 
-% if opts.addLossSmooth
-%     inputs{end+1} = 'boxes';
-%     inputs{end+1} = imdb.images.boxes{batch} ;
-% end
-
-% if isfield(imdb.images,'boxScores')
-%     boxScore = reshape(imdb.images.boxScores{batch},[1 1 1 numel(imdb.images.boxScores{batch})]);
-%     inputs{end+1} = 'boxScore';
-%     inputs{end+1} = boxScore ;
-% end
-
-%
-% function inputs = getDagNNBatch(opts, useGpu, imdb, batch)
-%
-% nViews = imdb.meta.nViews;
-%
-% batch = bsxfun(@plus,repmat(batch(:)',[nViews 1]),(0:nViews-1)');
-% batch = batch(:)';
-% images = strcat([imdb.imageDir filesep], imdb.images.name(batch)) ;
-% isVal = ~isempty(batch) && imdb.images.set(batch(1)) ~= 1 ;
-%
-% if ~isVal
-%   % training
-%   im = cnn_shape_get_batch(images, opts, ...
-%     'prefetch', nargout == 0, ...
-%     'nViews', nViews);
-% else
-%   % validation: disable data augmentation
-%    im = cnn_shape_get_batch(images, opts, ...
-%     'prefetch', nargout == 0, ...
-%     'nViews', nViews, ...
-%     'transformation', 'none');
-% end
-%
-% if nargout > 0
-%   if useGpu
-%     im = gpuArray(im) ;
-%   end
-% %   labels = imdb.images.label(batch) ;
-%   inputs = {'input', im, 'label', imdb.images.class(batch)} ;
-% end
 
