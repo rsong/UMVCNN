@@ -12,6 +12,7 @@ The pretrained network can be downloaded from https://drive.google.com/file/d/1o
 For a demo, simply implement the following lines in MATLAB command window
 
 setup;
+
 bv_view_p = bestview('airplane_0001.off');
 
 If you want to train it from the baseline VGG net, please follow the steps below:
@@ -26,7 +27,9 @@ Save it in .\data\models\
 Then, call the cnn_shape file using the pieces of codes below:
 
 setup; % Ignore this line if it has been implemented.
+
 expDir = 'data';
+
 cnn_shape('model30', ...
 'expDir', fullfile(expDir,'models'), ...
 'numFetchThreads', 8, ...
