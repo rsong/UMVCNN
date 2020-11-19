@@ -33,6 +33,6 @@ expDir = 'data';
 cnn_shape('model30', 'expDir', fullfile(expDir,'models'), 'numFetchThreads', 8, 'pad', 32, 'border', 32, 'batchSize', 5, 'maxIterPerEpoch', Inf, 'numEpochs', 50, 'learningRate', 0.00001);
 
 Please cite our paper if you use the codes:
-Ran Song, Wei Zhang, Yitian Zhao, Yonghuai Liu,Unsupervised Multi-View CNN for Salient View Selection of 3D Objects and Scenes. In Proc. ECCV, 2020.
+Ran Song, Wei Zhang, Yitian Zhao, Yonghuai Liu. Unsupervised Multi-View CNN for Salient View Selection of 3D Objects and Scenes. In Proc. ECCV, 2020.
 
 
