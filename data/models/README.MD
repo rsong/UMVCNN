@@ -1,0 +1,1 @@
+Download and save the vgg baseline net in this directory.
